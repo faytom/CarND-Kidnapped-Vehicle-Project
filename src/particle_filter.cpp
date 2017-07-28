@@ -76,9 +76,9 @@ void ParticleFilter::prediction(double delta_t, double std_pos[], double velocit
 		particles[i].y = dist_y(gen);
 		particles[i].theta = dist_theta(gen);
 
-		cout << "predicted location: X " << particles[i].x;
-		cout << "predicted location: Y " << particles[i].y;
-		cout << "predicted location: Theta " << particles[i].theta << endl;
+		// cout << "predicted location: X " << particles[i].x;
+		// cout << "predicted location: Y " << particles[i].y;
+		// cout << "predicted location: Theta " << particles[i].theta << endl;
 
 
 	}
@@ -117,8 +117,8 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 
 	    // set the observation's id to the nearest predicted landmark's id
 	    observations[i].id = map_id;
-	    cout << "Data associations: Obs X " << observations[i].x << " Y " << observations[i].y << endl;
-	    cout << "Data associations: Pre X " << predicted[map_id].x << " Y " << predicted[map_id].y << endl;
+	    // cout << "Data associations: Obs X " << observations[i].x << " Y " << observations[i].y << endl;
+	    // cout << "Data associations: Pre X " << predicted[map_id].x << " Y " << predicted[map_id].y << endl;
 
 	}
 }
@@ -154,14 +154,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 	      float lm_y = map_landmarks.landmark_list[j].y_f;
 	      int lm_id = map_landmarks.landmark_list[j].id_i;
 	      
-	      cout << "Landmark: X " << lm_x;
-	      cout << "Landmark: y " << lm_y;
-	      cout << "Landmark: id " << lm_id << endl;
+	      // cout << "Landmark: X " << lm_x;
+	      // cout << "Landmark: y " << lm_y;
+	      // cout << "Landmark: id " << lm_id << endl;
 
-
-
-	      // only consider landmarks within sensor range of the particle (rather than using the "dist" method considering a circular 
-	      // region around the particle, this considers a rectangular region but is computationally faster)
 	      // if (fabs(lm_x - particles[p].x) <= sensor_range && fabs(lm_y - particles[p].y) <= sensor_range) {
 	      if(dist( particles[p].x,  particles[p].y, lm_x, lm_y) < sensor_range)
 	      {
@@ -181,8 +177,8 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			trans_obs.x = particles[p].x + (Obs.x * cos(particles[p].theta) - Obs.y * sin(particles[p].theta));
 			trans_obs.y = particles[p].y + (Obs.x * sin(particles[p].theta) + Obs.y * cos(particles[p].theta));
 			trans_observations.push_back(trans_obs);
-			cout << "transform observation: X " << trans_obs.x;
-			cout << "transform observation: Y " << trans_obs.y << endl;
+			// cout << "transform observation: X " << trans_obs.x;
+			// cout << "transform observation: Y " << trans_obs.y << endl;
 
 
 		}
@@ -209,12 +205,12 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 				
 				// double obs_w = ( 1/(2*M_PI*s_x*s_y)) * exp( -( pow(pr_x-o_x,2)/(2*pow(s_x, 2)) + (pow(pr_y-o_y,2)/(2*pow(s_y, 2))) ) );
 				long double multipler = (1 / (2*M_PI*std_landmark[0]*std_landmark[1])) * exp(-(pow(meas_x - mu_x, 2)/(2*std_landmark[0]*std_landmark[0]) + pow(meas_y - mu_y, 2)/(2*std_landmark[1]*std_landmark[1])));
-				cout << "association: " << association << endl;
-				cout << "meas_x: " << meas_x << endl;
-				cout << "meas_y: " << meas_y << endl;
-				cout << "mu_x: " << mu_x << endl;
-				cout << "mu_y: " << mu_y << endl;
-				cout << "multipler: " << multipler << endl;
+				// cout << "association: " << association << endl;
+				// cout << "meas_x: " << meas_x << endl;
+				// cout << "meas_y: " << meas_y << endl;
+				// cout << "mu_x: " << mu_x << endl;
+				// cout << "mu_y: " << mu_y << endl;
+				// cout << "multipler: " << multipler << endl;
 
 				if(multipler > 0){
 					particles[p].weight *= multipler;
